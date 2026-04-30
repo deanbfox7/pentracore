@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PentraCore — AI Secretary & Sales System</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-950 text-gray-100 min-h-screen flex">
+
+  <!-- Sidebar -->
+  <aside class="w-64 bg-gray-900 border-r border-gray-800 flex flex-col min-h-screen fixed top-0 left-0">
+    <div class="p-6 border-b border-gray-800">
+      <h1 class="text-2xl font-bold tracking-widest text-yellow-400 uppercase">Pentracore</h1>
+      <p class="text-xs text-gray-400 tracking-widest uppercase mt-1">AI Secretary &amp; Sales System</p>
+    </div>
+
+    <nav class="flex-1 p-4 space-y-6">
+      <div>
+        <p class="text-xs text-gray-500 uppercase tracking-widest mb-2">Dashboard</p>
+        <button onclick="showPage('overview')" class="nav-btn w-full text-left px-3 py-2 rounded flex items-center gap-2 text-yellow-400 hover:bg-gray-800 transition" data-page="overview">
+          <span>◈</span> Overview
+        </button>
+      </div>
+
+      <div>
+        <p class="text-xs text-gray-500 uppercase tracking-widest mb-2">AI Tools</p>
+        <div class="space-y-1">
+          <button onclick="showPage('secretary')" class="nav-btn w-full text-left px-3 py-2 rounded flex items-center gap-2 hover:bg-gray-800 transition" data-page="secretary">
+            <span class="text-yellow-400">✦</span> AI Secretary
+          </button>
+          <button onclick="showPage('email')" class="nav-btn w-full text-left px-3 py-2 rounded flex items-center gap-2 hover:bg-gray-800 transition" data-page="email">
+            <span class="text-yellow-400">◉</span> Email Outreach
+          </button>
+          <button onclick="showPage('proposals')" class="nav-btn w-full text-left px-3 py-2 rounded flex items-center gap-2 hover:bg-gray-800 transition" data-page="proposals">
+            <span class="text-yellow-400">◎</span> Proposals &amp; Pitches
+          </button>
+          <button onclick="showPage('followup')" class="nav-btn w-full text-left px-3 py-2 rounded flex items-center gap-2 hover:bg-gray-800 transition" data-page="followup">
+            <span class="text-yellow-400">◷</span> Follow-Up Scheduler
+          </button>
+        </div>
+      </div>
+
+      <div>
+        <p class="text-xs text-gray-500 uppercase tracking-widest mb-2">Knowledge</p>
+        <button onclick="showPage('commodities')" class="nav-btn w-full text-left px-3 py-2 rounded flex items-center gap-2 hover:bg-gray-800 transition" data-page="commodities">
+          <span class="text-yellow-400">◆</span> Commodities Guide
+        </button>
+      </div>
+    </nav>
+
+    <div class="p-4 border-t border-gray-800">
+      <div class="flex items-center gap-2 text-xs text-green-400 mb-3">
+        <span class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span> AI Engine Online
+      </div>
+      <p class="text-xs text-gray-500 mb-2">Powered by Claude AI</p>
+      <div class="flex gap-2">
+        <input id="apiKeyInput" type="password" placeholder="Paste your Anthropic API key here"
+          class="flex-1 text-xs bg-gray-800 border border-gray-700 rounded px-2 py-1 text-gray-300 placeholder-gray-600 focus:outline-none focus:border-yellow-400" />
+        <button onclick="saveApiKey()" class="text-xs bg-yellow-400 text-gray-900 font-bold px-2 py-1 rounded hover:bg-yellow-300 transition">Save</button>
+      </div>
+      <p id="keyStatus" class="text-xs mt-1 text-gray-500">No Key</p>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="ml-64 flex-1 p-8">
+
+    <!-- Overview Page -->
+    <div id="page-overview" class="page">
+      <div class="mb-8">
+        <h2 class="text-3xl font-bold text-yellow-400">Overview</h2>
+        <p class="text-gray-400 mt-1">PentraCore International — African Mineral Wealth</p>
+      </div>
+
+      <div class="grid grid-cols-4 gap-4 mb-8">
+        <div class="stat-card bg-gray-900 border border-gray-800 rounded-xl p-5">
+          <p class="text-xs text-gray-500 uppercase tracking-widest mb-1">AI Tools Active</p>
+          <p class="text-4xl font-bold text-yellow-400">5</p>
+          <p class="text-xs text-gray-400 mt-1">All systems running</p>
+        </div>
+        <div class="stat-card bg-gray-900 border border-gray-800 rounded-xl p-5">
+          <p class="text-xs text-gray-500 uppercase tracking-widest mb-1">Commodities</p>
+          <p class="text-4xl font-bold text-yellow-400">6+</p>
+          <p class="text-xs text-gray-400 mt-1">Gold, Chrome, Copper…</p>
+        </div>
+        <div class="stat-card bg-gray-900 border border-gray-800 rounded-xl p-5">
+          <p class="text-xs text-gray-500 uppercase tracking-widest mb-1">Target Markets</p>
+          <p class="text-4xl font-bold text-yellow-400">4</p>
+          <p class="text-xs text-gray-400 mt-1">Asia, EU, ME, Americas</p>
+        </div>
+        <div class="stat-card bg-gray-900 border border-gray-800 rounded-xl p-5">
+          <p class="text-xs text-gray-500 uppercase tracking-widest mb-1">Status</p>
+          <p class="text-4xl font-bold text-green-400">LIVE</p>
+          <p class="text-xs text-gray-400 mt-1">Ready to sell</p>
+        </div>
+      </div>
+
+      <div class="bg-gray-900 border border-gray-800 rounded-xl p-6">
+        <h3 class="text-yellow-400 font-bold text-lg mb-4">● Your AI Sales Toolkit</h3>
+        <div class="grid grid-cols-2 gap-4">
+          <div class="bg-gray-800 rounded-lg p-4 cursor-pointer hover:border-yellow-400 border border-gray-700 transition" onclick="showPage('secretary')">
+            <p class="text-yellow-400 font-bold mb-2">✦ AI Secretary</p>
+            <p class="text-sm text-gray-400">Ask anything about PentraCore, commodity markets, how to handle buyers, what to say to investors. Your 24/7 expert assistant.</p>
+          </div>
+          <div class="bg-gray-800 rounded-lg p-4 cursor-pointer hover:border-yellow-400 border border-gray-700 transition" onclick="showPage('email')">
+            <p class="text-yellow-400 font-bold mb-2">◉ Email Outreach</p>
+            <p class="text-sm text-gray-400">Generate professional cold emails to commodity buyers, trading firms, and investors. Personalised for each target.</p>
+          </div>
+          <div class="bg-gray-800 rounded-lg p-4 cursor-pointer hover:border-yellow-400 border border-gray-700 transition" onclick="showPage('proposals')">
+            <p class="text-yellow-400 font-bold mb-2">◎ Proposals & Pitches</p>
+            <p class="text-sm text-gray-400">Generate compelling proposals and investor pitches tailored to each buyer's needs and market.</p>
+          </div>
+          <div class="bg-gray-800 rounded-lg p-4 cursor-pointer hover:border-yellow-400 border border-gray-700 transition" onclick="showPage('followup')">
+            <p class="text-yellow-400 font-bold mb-2">◷ Follow-Up Scheduler</p>
+            <p class="text-sm text-gray-400">Generate timely follow-up messages to keep buyers and investors engaged through the deal pipeline.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- AI Secretary Page -->
+    <div id="page-secretary" class="page hidden">
+      <div class="mb-6">
+        <h2 class="text-3xl font-bold text-yellow-400">✦ AI Secretary</h2>
+        <p class="text-gray-400 mt-1">Your 24/7 expert assistant for PentraCore sales & operations</p>
+      </div>
+      <div class="bg-gray-900 border border-gray-800 rounded-xl flex flex-col" style="height:600px">
+        <div id="chat-messages" class="flex-1 overflow-y-auto p-6 space-y-4">
+          <div class="flex gap-3">
+            <div class="w-8 h-8 bg-yellow-400 rounded-full flex items-center justify-center text-gray-900 font-bold text-xs flex-shrink-0">AI</div>
+            <div class="bg-gray-800 rounded-lg px-4 py-3 text-sm text-gray-200 max-w-2xl">
+              Hello! I'm your PentraCore AI Secretary. I can help you with commodity market insights, buyer handling strategies, investor talking points, deal negotiations, and anything else related to your African minerals business. What would you like to know?
+            </div>
+          </div>
+        </div>
+        <div class="border-t border-gray-800 p-4 flex gap-3">
+          <input id="chat-input" type="text" placeholder="Ask about commodities, buyers, markets, deals…"
+            class="flex-1 bg-gray-800 border border-gray-700 rounded-lg px-4 py-2 text-sm text-gray-200 placeholder-gray-500 focus:outline-none focus:border-yellow-400"
+            onkeydown="if(event.key==='Enter') sendChat()" />
+          <button onclick="sendChat()" class="bg-yellow-400 text-gray-900 font-bold px-5 py-2 rounded-lg hover:bg-yellow-300 transition text-sm">Send</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Email Outreach Page -->
+    <div id="page-email" class="page hidden">
+      <div class="mb-6">
+        <h2 class="text-3xl font-bold text-yellow-400">◉ Email Outreach</h2>
+        <p class="text-gray-400 mt-1">Generate personalised cold emails for buyers, trading firms, and investors</p>
+      </div>
+      <div class="grid grid-cols-2 gap-6">
+        <div class="bg-gray-900 border border-gray-800 rounded-xl p-6 space-y-4">
+          <div>
+            <label class="text-xs text-gray-400 uppercase tracking-widest">Recipient Name</label>
+            <input id="email-recipient" type="text" placeholder="e.g. John Chen" class="input-field mt-1" />
+          </div>
+          <div>
+            <label class="text-xs text-gray-400 uppercase tracking-widest">Company / Organisation</label>
+            <input id="email-company" type="text" placeholder="e.g. Asia Pacific Trading Ltd" class="input-field mt-1" />
+          </div>
+          <div>
+            <label class="text-xs text-gray-400 uppercase tracking-widest">Target Market</label>
+            <select id="email-market" class="input-field mt-1">
+              <option value="Asia">Asia</option>
+              <option value="Europe">Europe</option>
+              <option value="Middle East">Middle East</option>
+              <option value="Americas">Americas</option>
+            </select>
+          </div>
+          <div>
+            <label class="text-xs text-gray-400 uppercase tracking-widest">Commodity of Interest</label>
+            <select id="email-commodity" class="input-field mt-1">
+              <option value="Gold">Gold</option>
+              <option value="Chrome Ore">Chrome Ore</option>
+              <option value="Copper">Copper</option>
+              <option value="Manganese">Manganese</option>
+              <option value="Iron Ore">Iron Ore</option>
+              <option value="Coal">Coal</option>
+            </select>
+          </div>
+          <div>
+            <label class="text-xs text-gray-400 uppercase tracking-widest">Recipient Type</label>
+            <select id="email-type" class="input-field mt-1">
+              <option value="commodity buyer">Commodity Buyer</option>
+              <option value="trading firm">Trading Firm</option>
+              <option value="investor">Investor</option>
+              <option value="refinery">Refinery</option>
+            </select>
+          </div>
+          <button onclick="generateEmail()" class="w-full bg-yellow-400 text-gray-900 font-bold py-3 rounded-lg hover:bg-yellow-300 transition">Generate Email</button>
+        </div>
+        <div class="bg-gray-900 border border-gray-800 rounded-xl p-6">
+          <div class="flex justify-between items-center mb-3">
+            <p class="text-xs text-gray-400 uppercase tracking-widest">Generated Email</p>
+            <button onclick="copyOutput('email-output')" class="text-xs text-yellow-400 hover:text-yellow-300">Copy</button>
+          </div>
+          <div id="email-output" class="text-sm text-gray-300 whitespace-pre-wrap min-h-64 leading-relaxed">Your email will appear here…</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Proposals & Pitches Page -->
+    <div id="page-proposals" class="page hidden">
+      <div class="mb-6">
+        <h2 class="text-3xl font-bold text-yellow-400">◎ Proposals & Pitches</h2>
+        <p class="text-gray-400 mt-1">Generate tailored proposals and investor pitches</p>
+      </div>
+      <div class="grid grid-cols-2 gap-6">
+        <div class="bg-gray-900 border border-gray-800 rounded-xl p-6 space-y-4">
+          <div>
+            <label class="text-xs text-gray-400 uppercase tracking-widest">Proposal Type</label>
+            <select id="proposal-type" class="input-field mt-1">
+              <option value="supply agreement">Supply Agreement Proposal</option>
+              <option value="investment pitch">Investment Pitch</option>
+              <option value="joint venture">Joint Venture Proposal</option>
+              <option value="offtake agreement">Offtake Agreement</option>
+            </select>
+          </div>
+          <div>
+            <label class="text-xs text-gray-400 uppercase tracking-widest">Target Company / Investor</label>
+            <input id="proposal-target" type="text" placeholder="e.g. Shanghai Metals Corp" class="input-field mt-1" />
+          </div>
+          <div>
+            <label class="text-xs text-gray-400 uppercase tracking-widest">Commodity</label>
+            <select id="proposal-commodity" class="input-field mt-1">
+              <option value="Gold">Gold</option>
+              <option value="Chrome Ore">Chrome Ore</option>
+              <option value="Copper">Copper</option>
+              <option value="Manganese">Manganese</option>
+              <option value="Iron Ore">Iron Ore</option>
+              <option value="Coal">Coal</option>
+            </select>
+          </div>
+          <div>
+            <label class="text-xs text-gray-400 uppercase tracking-widest">Volume / Deal Size (optional)</label>
+            <input id="proposal-volume" type="text" placeholder="e.g. 5,000 MT/month or $2M" class="input-field mt-1" />
+          </div>
+          <div>
+            <label class="text-xs text-gray-400 uppercase tracking-widest">Key Selling Points (optional)</label>
+            <textarea id="proposal-notes" placeholder="e.g. ethical sourcing, competitive pricing, established supply chain" class="input-field mt-1 h-20 resize-none"></textarea>
+          </div>
+          <button onclick="generateProposal()" class="w-full bg-yellow-400 text-gray-900 font-bold py-3 rounded-lg hover:bg-yellow-300 transition">Generate Proposal</button>
+        </div>
+        <div class="bg-gray-900 border border-gray-800 rounded-xl p-6">
+          <div class="flex justify-between items-center mb-3">
+            <p class="text-xs text-gray-400 uppercase tracking-widest">Generated Proposal</p>
+            <button onclick="copyOutput('proposal-output')" class="text-xs text-yellow-400 hover:text-yellow-300">Copy</button>
+          </div>
+          <div id="proposal-output" class="text-sm text-gray-300 whitespace-pre-wrap min-h-64 leading-relaxed overflow-y-auto max-h-96">Your proposal will appear here…</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Follow-Up Scheduler Page -->
+    <div id="page-followup" class="page hidden">
+      <div class="mb-6">
+        <h2 class="text-3xl font-bold text-yellow-400">◷ Follow-Up Scheduler</h2>
+        <p class="text-gray-400 mt-1">Generate follow-up messages to keep deals moving</p>
+      </div>
+      <div class="grid grid-cols-2 gap-6">
+        <div class="bg-gray-900 border border-gray-800 rounded-xl p-6 space-y-4">
+          <div>
+            <label class="text-xs text-gray-400 uppercase tracking-widest">Recipient Name</label>
+            <input id="followup-recipient" type="text" placeholder="e.g. Maria Santos" class="input-field mt-1" />
+          </div>
+          <div>
+            <label class="text-xs text-gray-400 uppercase tracking-widest">Follow-Up Stage</label>
+            <select id="followup-stage" class="input-field mt-1">
+              <option value="first follow-up after initial outreach">First follow-up (no reply yet)</option>
+              <option value="second follow-up, still no reply">Second follow-up (still no reply)</option>
+              <option value="follow-up after a meeting or call">After a meeting/call</option>
+              <option value="follow-up on a sent proposal">After sending a proposal</option>
+              <option value="re-engagement after going cold">Re-engagement (gone cold)</option>
+            </select>
+          </div>
+          <div>
+            <label class="text-xs text-gray-400 uppercase tracking-widest">Context (optional)</label>
+            <textarea id="followup-context" placeholder="e.g. We met at Mining Indaba, discussed chrome ore supply for Q3" class="input-field mt-1 h-20 resize-none"></textarea>
+          </div>
+          <button onclick="generateFollowUp()" class="w-full bg-yellow-400 text-gray-900 font-bold py-3 rounded-lg hover:bg-yellow-300 transition">Generate Follow-Up</button>
+        </div>
+        <div class="bg-gray-900 border border-gray-800 rounded-xl p-6">
+          <div class="flex justify-between items-center mb-3">
+            <p class="text-xs text-gray-400 uppercase tracking-widest">Generated Follow-Up</p>
+            <button onclick="copyOutput('followup-output')" class="text-xs text-yellow-400 hover:text-yellow-300">Copy</button>
+          </div>
+          <div id="followup-output" class="text-sm text-gray-300 whitespace-pre-wrap min-h-64 leading-relaxed">Your follow-up message will appear here…</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Commodities Guide Page -->
+    <div id="page-commodities" class="page hidden">
+      <div class="mb-6">
+        <h2 class="text-3xl font-bold text-yellow-400">◆ Commodities Guide</h2>
+        <p class="text-gray-400 mt-1">PentraCore's African mineral portfolio</p>
+      </div>
+      <div class="grid grid-cols-3 gap-4">
+        <div class="commodity-card bg-gray-900 border border-gray-800 rounded-xl p-5 hover:border-yellow-400 transition cursor-pointer" onclick="askAboutCommodity('Gold')">
+          <p class="text-2xl mb-2">🥇</p>
+          <h3 class="text-yellow-400 font-bold text-lg">Gold</h3>
+          <p class="text-xs text-gray-400 mt-1">West & Central Africa</p>
+          <p class="text-sm text-gray-300 mt-2">Artisanal and large-scale gold sourcing. Ethically certified. Target markets: Asia, Middle East, Europe.</p>
+        </div>
+        <div class="commodity-card bg-gray-900 border border-gray-800 rounded-xl p-5 hover:border-yellow-400 transition cursor-pointer" onclick="askAboutCommodity('Chrome Ore')">
+          <p class="text-2xl mb-2">⚙️</p>
+          <h3 class="text-yellow-400 font-bold text-lg">Chrome Ore</h3>
+          <p class="text-xs text-gray-400 mt-1">Southern Africa (Zimbabwe, South Africa)</p>
+          <p class="text-sm text-gray-300 mt-2">High-grade chrome ore for ferrochrome production. Key buyers: China, India, stainless steel manufacturers.</p>
+        </div>
+        <div class="commodity-card bg-gray-900 border border-gray-800 rounded-xl p-5 hover:border-yellow-400 transition cursor-pointer" onclick="askAboutCommodity('Copper')">
+          <p class="text-2xl mb-2">🔶</p>
+          <h3 class="text-yellow-400 font-bold text-lg">Copper</h3>
+          <p class="text-xs text-gray-400 mt-1">DRC, Zambia (Copper Belt)</p>
+          <p class="text-sm text-gray-300 mt-2">Copper cathodes and concentrates. Critical for EV and renewable energy sectors. Global demand rising.</p>
+        </div>
+        <div class="commodity-card bg-gray-900 border border-gray-800 rounded-xl p-5 hover:border-yellow-400 transition cursor-pointer" onclick="askAboutCommodity('Manganese')">
+          <p class="text-2xl mb-2">🪨</p>
+          <h3 class="text-yellow-400 font-bold text-lg">Manganese</h3>
+          <p class="text-xs text-gray-400 mt-1">South Africa, Gabon</p>
+          <p class="text-sm text-gray-300 mt-2">Essential for steel production and EV batteries. Africa holds majority of world reserves.</p>
+        </div>
+        <div class="commodity-card bg-gray-900 border border-gray-800 rounded-xl p-5 hover:border-yellow-400 transition cursor-pointer" onclick="askAboutCommodity('Iron Ore')">
+          <p class="text-2xl mb-2">🏗️</p>
+          <h3 class="text-yellow-400 font-bold text-lg">Iron Ore</h3>
+          <p class="text-xs text-gray-400 mt-1">Guinea, Sierra Leone, Liberia</p>
+          <p class="text-sm text-gray-300 mt-2">High-grade iron ore for steel manufacturing. West Africa emerging as key global supplier.</p>
+        </div>
+        <div class="commodity-card bg-gray-900 border border-gray-800 rounded-xl p-5 hover:border-yellow-400 transition cursor-pointer" onclick="askAboutCommodity('Coal')">
+          <p class="text-2xl mb-2">⬛</p>
+          <h3 class="text-yellow-400 font-bold text-lg">Coal</h3>
+          <p class="text-xs text-gray-400 mt-1">Mozambique, Zimbabwe, South Africa</p>
+          <p class="text-sm text-gray-300 mt-2">Thermal and coking coal. Key export markets: India, Asia Pacific. Transitional energy commodity.</p>
+        </div>
+      </div>
+      <div class="mt-6 bg-gray-900 border border-gray-800 rounded-xl p-5">
+        <p class="text-xs text-gray-400 uppercase tracking-widest mb-2">Ask AI about any commodity</p>
+        <div class="flex gap-3">
+          <input id="commodity-question" type="text" placeholder="e.g. What is the current demand outlook for chrome ore in China?"
+            class="flex-1 bg-gray-800 border border-gray-700 rounded-lg px-4 py-2 text-sm text-gray-200 placeholder-gray-500 focus:outline-none focus:border-yellow-400"
+            onkeydown="if(event.key==='Enter') askCommodityQuestion()" />
+          <button onclick="askCommodityQuestion()" class="bg-yellow-400 text-gray-900 font-bold px-5 py-2 rounded-lg hover:bg-yellow-300 transition text-sm">Ask AI</button>
+        </div>
+        <div id="commodity-answer" class="mt-4 text-sm text-gray-300 whitespace-pre-wrap hidden"></div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Loading overlay -->
+  <div id="loading" class="hidden fixed inset-0 bg-gray-950 bg-opacity-70 flex items-center justify-center z-50">
+    <div class="bg-gray-900 border border-yellow-400 rounded-xl px-8 py-6 text-center">
+      <div class="w-8 h-8 border-2 border-yellow-400 border-t-transparent rounded-full animate-spin mx-auto mb-3"></div>
+      <p class="text-yellow-400 text-sm font-medium">AI is thinking…</p>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
